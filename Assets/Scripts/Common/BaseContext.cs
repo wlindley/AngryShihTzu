@@ -18,6 +18,13 @@ namespace AST
             injectionBinder.Bind<ICommandBinder>().To<SignalCommandBinder>().ToSingleton();
         }
 
+        protected override void mapBindings()
+        {
+            base.mapBindings();
+
+            commandBinder.Bind<LoadGameSignal>().To<LoadGameCommand>();
+        }
+
         public override void Launch()
         {
             base.Launch();

@@ -11,7 +11,10 @@ namespace AST.Menu
         protected override void mapBindings()
         {
             base.mapBindings();
+
             commandBinder.Bind<MenuStartSignal>().To<MenuStartupCommand>();
+
+            mediationBinder.Bind<MenuView>().To<MenuViewMediator>();
         }
 
         protected override Signal getStartSignal()

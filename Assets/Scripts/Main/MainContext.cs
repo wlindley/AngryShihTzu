@@ -14,6 +14,7 @@ namespace AST.Main
         protected override void mapBindings()
         {
             base.mapBindings();
+
             commandBinder.Bind<MainStartSignal>().To<MainStartupCommand>();
         }
 
