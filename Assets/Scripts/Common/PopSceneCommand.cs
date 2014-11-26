@@ -11,7 +11,7 @@ namespace AST
         public override void Execute()
         {
             sceneStack.Pop();
-            Application.LoadLevelAdditive(sceneStack.Peek().sceneName);
+            Application.LoadLevelAdditive(sceneStack.Peek());
         }
     }
 }

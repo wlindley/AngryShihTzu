@@ -4,14 +4,8 @@ using UnityEngine;
 
 namespace AST.Menu
 {
-    class MenuStartupCommand : Command
+    public class MenuStartupCommand : Command
     {
-        [Inject(ContextKeys.CONTEXT_VIEW)]
-        public GameObject contextView { private get; set; }
-
-        [Inject]
-        public SceneStack sceneStack { private get; set; }
-
         public override void Execute()
         {
             

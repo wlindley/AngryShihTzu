@@ -10,7 +10,7 @@ namespace AST
 
         public override void Execute()
         {
-            sceneStack.Push(new SceneStackElement("Menu", null));
+            sceneStack.Push("Menu");
             Application.LoadLevelAdditive("Menu");
         }
     }

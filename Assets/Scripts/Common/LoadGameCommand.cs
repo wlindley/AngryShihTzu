@@ -10,7 +10,7 @@ namespace AST
 
         public override void Execute()
         {
-            sceneStack.Push(new SceneStackElement("Game", null));
+            sceneStack.Push("Game");
             Application.LoadLevelAdditive("Game");
         }
     }
