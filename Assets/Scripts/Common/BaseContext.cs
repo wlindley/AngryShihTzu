@@ -24,6 +24,7 @@ namespace AST
 
             commandBinder.Bind<LoadMenuSignal>().To<UnloadCurrentSceneCommand>().To<LoadMenuCommand>().InSequence();
             commandBinder.Bind<LoadGameSignal>().To<UnloadCurrentSceneCommand>().To<LoadGameCommand>().InSequence();
+            commandBinder.Bind<PopSceneSignal>().To<UnloadCurrentSceneCommand>().To<PopSceneCommand>().InSequence();
         }
 
         public override void Launch()

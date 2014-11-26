@@ -14,7 +14,7 @@ namespace AST.Game
 
         public override void Execute()
         {
-            sceneStack.Push(new SceneStackElement("Game", contextView));
+            
         }
     }
 }

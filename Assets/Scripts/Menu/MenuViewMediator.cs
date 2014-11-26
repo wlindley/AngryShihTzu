@@ -9,23 +9,23 @@ namespace AST.Menu
         public MenuView view { private get; set; }
 
         [Inject]
-        public LoadGameSignal loadGameSignal { private get; set; }
+        public LoadGameSignal signal { private get; set; }
 
         public override void OnRegister()
         {
             base.OnRegister();
-            view.OnStartClick.AddListener(HandleStartClicked);
+            view.OnStartClicked.AddListener(HandleStartClicked);
         }
 
         public override void OnRemove()
         {
             base.OnRemove();
-            view.OnStartClick.RemoveListener(HandleStartClicked);
+            view.OnStartClicked.RemoveListener(HandleStartClicked);
         }
 
         private void HandleStartClicked()
         {
-            loadGameSignal.Dispatch();
+            signal.Dispatch();
         }
     }
 }

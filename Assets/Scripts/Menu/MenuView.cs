@@ -6,11 +6,11 @@ namespace AST.Menu
 {
     public class MenuView : View
     {
-        public Signal OnStartClick = new Signal();
+        public Signal OnStartClicked = new Signal();
 
         public void HandleClick()
         {
-            OnStartClick.Dispatch();
+            OnStartClicked.Dispatch();
         }
     }
 }
