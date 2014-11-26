@@ -1,3 +1,6 @@
 using strange.extensions.signal.impl;
 
-class MainStartSignal : Signal {}
+namespace AST.Main
+{
+    class MainStartSignal : Signal { }
+}

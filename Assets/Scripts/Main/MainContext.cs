@@ -3,27 +3,23 @@ using System.Collections;
 using strange.extensions.context.impl;
 using strange.extensions.command.api;
 using strange.extensions.command.impl;
+using strange.extensions.signal.impl;
 
-public class MainContext : MVCSContext {
-	public MainContext(MonoBehaviour contextView) : base(contextView) {}
+namespace AST.Main
+{
+    public class MainContext : BaseContext
+    {
+        public MainContext(MonoBehaviour contextView) : base(contextView) { }
 
-	protected override void addCoreComponents()
-	{
-		base.addCoreComponents();
-		injectionBinder.Unbind<ICommandBinder>();
-		injectionBinder.Bind<ICommandBinder>().To<SignalCommandBinder>().ToSingleton();
-	}
+        protected override void mapBindings()
+        {
+            base.mapBindings();
+            commandBinder.Bind<MainStartSignal>().To<MainStartupCommand>();
+        }
 
-	public override void Launch ()
-	{
-		base.Launch();
-		var signal = injectionBinder.GetInstance<MainStartSignal>();
-		signal.Dispatch();
-	}
-
-	protected override void mapBindings ()
-	{
-		base.mapBindings();
-		commandBinder.Bind<MainStartSignal>().To<MainStartupCommand>();
-	}
+        protected override Signal getStartSignal()
+        {
+            return injectionBinder.GetInstance<MainStartSignal>();
+        }
+    }
 }
