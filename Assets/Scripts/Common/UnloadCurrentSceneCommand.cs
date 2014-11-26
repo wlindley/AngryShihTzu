@@ -2,19 +2,16 @@
 using strange.extensions.context.api;
 using UnityEngine;
 
-namespace AST.Game
+namespace AST
 {
-    public class GameStartupCommand : Command
+    public class UnloadCurrentSceneCommand : Command
     {
         [Inject(ContextKeys.CONTEXT_VIEW)]
         public GameObject contextView { private get; set; }
 
-        [Inject]
-        public SceneStack sceneStack { private get; set; }
-
         public override void Execute()
         {
-            sceneStack.Push(new SceneStackElement("Game", contextView));
+            GameObject.Destroy(contextView);
         }
     }
 }

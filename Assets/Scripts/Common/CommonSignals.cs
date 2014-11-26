@@ -2,5 +2,6 @@
 
 namespace AST
 {
+    public class LoadMenuSignal : Signal { }
     public class LoadGameSignal : Signal { }
 }

@@ -15,7 +15,9 @@ namespace AST.Main
         {
             base.mapBindings();
 
-            commandBinder.Bind<MainStartSignal>().To<MainStartupCommand>();
+            injectionBinder.Bind<SceneStack>().ToSingleton().CrossContext();
+
+            commandBinder.Bind<MainStartSignal>().To<LoadMenuCommand>();
         }
 
         protected override Signal getStartSignal()
