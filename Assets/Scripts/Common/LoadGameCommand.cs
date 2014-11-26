@@ -6,12 +6,11 @@ namespace AST
     public class LoadGameCommand : Command
     {
         [Inject]
-        public SceneStack sceneStack { private get; set; }
+        public LevelLoader levelLoader { private get; set; }
 
         public override void Execute()
         {
-            sceneStack.Push("Game");
-            Application.LoadLevelAdditive("Game");
+            levelLoader.LoadLevel("Game");
         }
     }
 }

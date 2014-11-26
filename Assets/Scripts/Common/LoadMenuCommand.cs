@@ -6,12 +6,11 @@ namespace AST
     class LoadMenuCommand : Command
     {
         [Inject]
-        public SceneStack sceneStack { private get; set; }
+        public LevelLoader levelLoader { private get; set; }
 
         public override void Execute()
         {
-            sceneStack.Push("Menu");
-            Application.LoadLevelAdditive("Menu");
+            levelLoader.LoadLevel("Menu");
         }
     }
 }
