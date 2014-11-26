@@ -2,5 +2,6 @@
 
 namespace AST.Game
 {
-    class GameStartSignal : Signal { }
+    public class GameStartSignal : Signal { }
+    public class GameUpdateSignal : Signal<float> { }
 }

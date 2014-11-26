@@ -12,7 +12,10 @@ namespace AST.Game
         {
             base.mapBindings();
 
+            injectionBinder.Bind<SpawnModel>().ToSingleton();
+
             commandBinder.Bind<GameStartSignal>().To<GameStartupCommand>();
+            commandBinder.Bind<GameUpdateSignal>().To<DecrementSpawnTimerCommand>();
 
             mediationBinder.Bind<GameView>().To<GameViewMediator>();
         }
