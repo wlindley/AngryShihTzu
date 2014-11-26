@@ -16,8 +16,10 @@ namespace AST.Game
 
             commandBinder.Bind<GameStartSignal>().To<GameStartupCommand>();
             commandBinder.Bind<GameUpdateSignal>().To<DecrementSpawnTimerCommand>();
+            commandBinder.Bind<SpawnSignal>().To<SpawnCommand>();
 
             mediationBinder.Bind<GameView>().To<GameViewMediator>();
+            mediationBinder.Bind<SpawnConfigView>().To<SpawnConfigViewMediator>();
         }
 
         protected override Signal getStartSignal()

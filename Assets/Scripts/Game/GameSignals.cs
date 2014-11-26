@@ -4,4 +4,5 @@ namespace AST.Game
 {
     public class GameStartSignal : Signal { }
     public class GameUpdateSignal : Signal<float> { }
+    public class SpawnSignal : Signal { }
 }

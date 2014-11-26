@@ -10,9 +10,22 @@ namespace AST.Game
         [Inject]
         public SpawnModel model { private get; set; }
 
+        [Inject]
+        public SpawnSignal spawnSignal { private get; set; }
+
         public override void Execute()
         {
             model.SpawnTimer -= timeDelta;
+            if (model.SpawnTimer <= 0f)
+            {
+                SpawnModel();
+                model.SpawnTimer += model.SpawnDelay;
+            }
+        }
+
+        private void SpawnModel()
+        {
+            spawnSignal.Dispatch();
         }
     }
 }
