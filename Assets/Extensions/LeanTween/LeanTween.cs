@@ -1622,14 +1622,10 @@ private static Transform trans;
 private static float timeTotal;
 private static TweenAction tweenAction;
 private static float ratioPassed;
-private static float from;
-private static float to;
 private static float val;
 private static bool isTweenFinished;
 private static int maxTweenReached;
 private static Vector3 newVect;
-private static GameObject target;
-private static GameObject customTarget;
 
 public static void update() {
 	if(frameRendered != Time.frameCount){ // make sure update is only called once per frame
