@@ -2,7 +2,7 @@
 {
     public class SpawnModel
     {
-        public float SpawnTimer = -1f;
+        public float SpawnTimer;
         public float SpawnDelay;
     }
 }

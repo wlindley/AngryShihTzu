@@ -38,7 +38,7 @@ namespace AST.Game
         private void HandleReparentSpawnedObject(GameObject obj)
         {
             if (null == obj.transform.parent)
-                obj.transform.parent = view.transform;
+                obj.transform.SetParent(view.transform, false);
         }
     }
 }

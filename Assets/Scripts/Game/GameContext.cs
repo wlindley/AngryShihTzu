@@ -21,6 +21,7 @@ namespace AST.Game
 
             mediationBinder.Bind<GameView>().To<GameViewMediator>();
             mediationBinder.Bind<SpawnConfigView>().To<SpawnConfigViewMediator>();
+            mediationBinder.Bind<DogImageView>().To<DogImageViewMediator>();
         }
 
         protected override Signal getStartSignal()
