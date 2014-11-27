@@ -9,10 +9,13 @@ namespace AST.Game
         [Inject]
         public ReparentSpawnedObjectSignal reparentSignal { private get; set; }
 
+        [Inject]
+        public SpawnModel spawnModel { private get; set; }
+
         public override void Execute()
         {
             var obj = InstantiatePrefab();
-            SetRandomImage(obj.GetComponent<Image>());
+            InitializeObject(obj.GetComponent<Image>());
             reparentSignal.Dispatch(obj);
         }
 
@@ -22,9 +25,15 @@ namespace AST.Game
             return GameObject.Instantiate(prefab) as GameObject;
         }
 
-        private void SetRandomImage(Image image)
+        private void InitializeObject(Image image)
         {
             image.sprite = Resources.Load<Sprite>("Images/" + Random.Range(0, 16).ToString("D2"));
+            var pos = image.rectTransform.position;
+            pos.y = spawnModel.spawnHeight;
+            pos.x = Random.Range(spawnModel.minSpawnX, spawnModel.maxSpawnX);
+            image.rectTransform.position = pos;
+
+            LeanTween.move(image.rectTransform, new Vector2(pos.x, spawnModel.deathHeight), Random.Range(spawnModel.minFallTime, spawnModel.maxFallTime));
         }
     }
 }
