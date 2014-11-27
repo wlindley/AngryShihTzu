@@ -5,7 +5,7 @@ namespace AST.Game
 {
     public class SpawnConfigView : View
     {
-        public float SpawnDelay = 5f;
+        public SpawnModel spawnConfig = new SpawnModel();
 
         public Signal OnUpdated = new Signal();
 

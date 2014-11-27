@@ -24,7 +24,12 @@ namespace AST.Game
 
         private void HandleViewUpdated()
         {
-            spawnModel.SpawnDelay = view.SpawnDelay;
+            var modelType = spawnModel.GetType();
+            foreach (var f in modelType.GetFields())
+            {
+                if (!f.IsNotSerialized)
+                    f.SetValue(spawnModel, f.GetValue(view.spawnConfig));
+            }
         }
     }
 }
