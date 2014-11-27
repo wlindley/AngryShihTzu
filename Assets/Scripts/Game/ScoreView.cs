@@ -1,5 +1,6 @@
 ﻿using strange.extensions.mediation.impl;
 using UnityEngine.UI;
+using UnityEngine;
 
 namespace AST.Game
 {
@@ -16,6 +17,7 @@ namespace AST.Game
         public void SetScore(int score)
         {
             scoreLabel.text = "Score: " + score;
+            LeanTween.textColor(scoreLabel.gameObject, Color.yellow, .15f).setLoopPingPong().setLoopCount(4);
         }
     }
 }
