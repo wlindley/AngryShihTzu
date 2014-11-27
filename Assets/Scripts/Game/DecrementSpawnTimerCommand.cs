@@ -1,4 +1,5 @@
 ﻿using strange.extensions.command.impl;
+using UnityEngine;
 
 namespace AST.Game
 {
@@ -19,8 +20,13 @@ namespace AST.Game
             if (model.spawnTimer <= 0f)
             {
                 SpawnModel();
-                model.spawnTimer += model.spawnDelay;
+                model.spawnTimer += getRandomSpawnTime();
             }
+        }
+
+        private float getRandomSpawnTime()
+        {
+            return Random.Range(model.minSpawnDelay, model.maxSpawnDelay);
         }
 
         private void SpawnModel()

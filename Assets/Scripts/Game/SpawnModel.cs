@@ -8,6 +8,7 @@ namespace AST.Game
         [NonSerialized]
         public float spawnTimer;
 
-        public float spawnDelay;
+        public float minSpawnDelay;
+        public float maxSpawnDelay;
     }
 }
