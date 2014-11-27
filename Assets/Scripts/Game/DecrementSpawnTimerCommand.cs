@@ -15,11 +15,11 @@ namespace AST.Game
 
         public override void Execute()
         {
-            model.SpawnTimer -= timeDelta;
-            if (model.SpawnTimer <= 0f)
+            model.spawnTimer -= timeDelta;
+            if (model.spawnTimer <= 0f)
             {
                 SpawnModel();
-                model.SpawnTimer += model.SpawnDelay;
+                model.spawnTimer += model.spawnDelay;
             }
         }
 

@@ -13,15 +13,19 @@ namespace AST.Game
             base.mapBindings();
 
             injectionBinder.Bind<SpawnModel>().ToSingleton();
+            injectionBinder.Bind<GameModel>().ToSingleton();
 
             commandBinder.Bind<GameStartSignal>().To<GameStartupCommand>();
             commandBinder.Bind<GameUpdateSignal>().To<DecrementSpawnTimerCommand>();
             commandBinder.Bind<SpawnSignal>().To<SpawnCommand>();
             commandBinder.Bind<ReparentSpawnedObjectSignal>();
+            commandBinder.Bind<TargetHitSignal>().To<IncrementScoreCommand>().To<DestroyGameObjectCommand>().InSequence();
+            commandBinder.Bind<ScoreUpdatedSignal>();
 
             mediationBinder.Bind<GameView>().To<GameViewMediator>();
             mediationBinder.Bind<SpawnConfigView>().To<SpawnConfigViewMediator>();
             mediationBinder.Bind<DogImageView>().To<DogImageViewMediator>();
+            mediationBinder.Bind<ScoreView>().To<ScoreViewMediator>();
         }
 
         protected override Signal getStartSignal()

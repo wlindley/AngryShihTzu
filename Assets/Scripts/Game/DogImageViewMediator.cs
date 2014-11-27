@@ -8,6 +8,9 @@ namespace AST.Game
         [Inject]
         public DogImageView view { private get; set; }
 
+        [Inject]
+        public TargetHitSignal hitSignal { private get; set; }
+
         public override void OnRegister()
         {
             base.OnRegister();
@@ -22,7 +25,7 @@ namespace AST.Game
 
         private void HandleClicked()
         {
-            GameObject.Destroy(view.gameObject);
+            hitSignal.Dispatch(view.gameObject);
         }
     }
 }

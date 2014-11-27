@@ -6,8 +6,8 @@ namespace AST.Game
     public class SpawnModel
     {
         [NonSerialized]
-        public float SpawnTimer;
+        public float spawnTimer;
 
-        public float SpawnDelay;
+        public float spawnDelay;
     }
 }

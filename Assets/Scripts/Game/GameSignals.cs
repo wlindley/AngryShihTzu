@@ -7,4 +7,6 @@ namespace AST.Game
     public class GameUpdateSignal : Signal<float> { }
     public class SpawnSignal : Signal { }
     public class ReparentSpawnedObjectSignal : Signal<GameObject> { }
+    public class TargetHitSignal : Signal<GameObject> { }
+    public class ScoreUpdatedSignal : Signal<int> { }
 }
