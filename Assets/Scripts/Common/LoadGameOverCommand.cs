@@ -1,15 +1,15 @@
-using strange.extensions.command.impl;
+﻿using strange.extensions.command.impl;
 
 namespace AST
 {
-    class LoadMenuCommand : Command
+    public class LoadGameOverCommand : Command
     {
         [Inject]
         public LevelLoader levelLoader { private get; set; }
 
         public override void Execute()
         {
-            levelLoader.LoadLevel("Menu");
+            levelLoader.LoadLevel("GameOver");
         }
     }
 }

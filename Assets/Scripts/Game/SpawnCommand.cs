@@ -10,6 +10,9 @@ namespace AST.Game
         public ReparentSpawnedObjectSignal reparentSignal { private get; set; }
 
         [Inject]
+        public TargetEscapedSignal escapeSignal { private get; set; }
+
+        [Inject]
         public SpawnModel spawnModel { private get; set; }
 
         public override void Execute()
@@ -33,7 +36,13 @@ namespace AST.Game
             pos.x = Random.Range(spawnModel.minSpawnX, spawnModel.maxSpawnX);
             image.rectTransform.position = pos;
 
-            LeanTween.move(image.rectTransform, new Vector2(pos.x, spawnModel.deathHeight), Random.Range(spawnModel.minFallTime, spawnModel.maxFallTime));
+            LeanTween.move(image.rectTransform, new Vector2(pos.x, spawnModel.deathHeight), Random.Range(spawnModel.minFallTime, spawnModel.maxFallTime)).setOnComplete(HandleEscaped);
+        }
+
+        private void HandleEscaped()
+        {
+            escapeSignal.Dispatch();
+            LeanTween.pauseAll();
         }
     }
 }

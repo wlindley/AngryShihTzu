@@ -5,4 +5,5 @@ namespace AST
     public class PopSceneSignal : Signal { }
     public class LoadMenuSignal : Signal { }
     public class LoadGameSignal : Signal { }
+    public class LoadGameOverSignal : Signal { }
 }

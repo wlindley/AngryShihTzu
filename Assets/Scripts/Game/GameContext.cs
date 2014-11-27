@@ -20,6 +20,7 @@ namespace AST.Game
             commandBinder.Bind<SpawnSignal>().To<SpawnCommand>();
             commandBinder.Bind<ReparentSpawnedObjectSignal>();
             commandBinder.Bind<TargetHitSignal>().To<IncrementScoreCommand>().To<DestroyGameObjectCommand>().InSequence();
+            commandBinder.Bind<TargetEscapedSignal>().To<GameOverCommand>().To<LoadGameOverCommand>().InSequence();
             commandBinder.Bind<ScoreUpdatedSignal>();
 
             mediationBinder.Bind<GameView>().To<GameViewMediator>();

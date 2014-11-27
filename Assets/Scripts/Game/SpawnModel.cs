@@ -6,7 +6,7 @@ namespace AST.Game
     public class SpawnModel
     {
         [NonSerialized]
-        public float spawnTimer;
+        public float spawnTimer = float.MaxValue;
 
         public float minSpawnDelay;
         public float maxSpawnDelay;
