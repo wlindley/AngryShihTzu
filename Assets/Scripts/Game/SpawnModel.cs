@@ -7,9 +7,13 @@ namespace AST.Game
     {
         [NonSerialized]
         public float spawnTimer = float.MaxValue;
+        [NonSerialized]
+        public float spawnSuccessOffset = 0f;
 
+        public float initialMinSpawnDelay;
+        public float initialMaxSpawnDelay;
+        public float spawnDelayDecrementOnSuccess;
         public float minSpawnDelay;
-        public float maxSpawnDelay;
         public float spawnHeight;
         public float deathHeight;
         public float minSpawnX;

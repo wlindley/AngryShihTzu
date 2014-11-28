@@ -19,7 +19,7 @@ namespace AST.Game
             commandBinder.Bind<GameUpdateSignal>().To<DecrementSpawnTimerCommand>();
             commandBinder.Bind<SpawnSignal>().To<SpawnCommand>();
             commandBinder.Bind<ReparentSpawnedObjectSignal>();
-            commandBinder.Bind<TargetHitSignal>().To<IncrementScoreCommand>().To<DestroyGameObjectCommand>().InSequence();
+            commandBinder.Bind<TargetHitSignal>().To<DecrementSpawnDelayOffsetCommand>().To<IncrementScoreCommand>().To<DestroyGameObjectCommand>().InSequence();
             commandBinder.Bind<TargetEscapedSignal>().To<SaveScoreCommand>().To<GameOverCommand>().InSequence();
             commandBinder.Bind<ScoreUpdatedSignal>();
 

@@ -19,17 +19,20 @@ namespace AST.Game
             model.spawnTimer -= timeDelta;
             if (model.spawnTimer <= 0f)
             {
-                SpawnModel();
-                model.spawnTimer += getRandomSpawnTime();
+                SpawnObject();
+                ResetTimer();
             }
         }
 
-        private float getRandomSpawnTime()
+        private void ResetTimer()
         {
-            return Random.Range(model.minSpawnDelay, model.maxSpawnDelay);
+            model.spawnTimer += Mathf.Max(
+                Random.Range(model.initialMinSpawnDelay, model.initialMaxSpawnDelay) + model.spawnSuccessOffset,
+                model.minSpawnDelay);
+            Debug.Log("Next spawn time: " + model.spawnTimer);
         }
 
-        private void SpawnModel()
+        private void SpawnObject()
         {
             spawnSignal.Dispatch();
         }
