@@ -12,7 +12,8 @@ namespace AST.Game
         public override void Execute()
         {
             spawnModel.spawnTimer = 1f;
-            spawnModel.spawnSuccessOffset = 0f;
+            spawnModel.spawnDelayOffset = 0f;
+            spawnModel.fallTimeOffset = 0f;
         }
     }
 }

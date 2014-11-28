@@ -36,7 +36,15 @@ namespace AST.Game
             pos.x = Random.Range(spawnModel.minSpawnX, spawnModel.maxSpawnX);
             image.rectTransform.position = pos;
 
-            LeanTween.move(image.rectTransform, new Vector2(pos.x, spawnModel.deathHeight), Random.Range(spawnModel.minFallTime, spawnModel.maxFallTime)).setOnComplete(HandleEscaped);
+            var fallTime = GetFallTime();
+            LeanTween.move(image.rectTransform, new Vector2(pos.x, spawnModel.deathHeight), fallTime).setOnComplete(HandleEscaped);
+        }
+
+        private float GetFallTime()
+        {
+            return Mathf.Max(
+                Random.Range(spawnModel.initialMinFallTime, spawnModel.initialMaxFallTime) + spawnModel.fallTimeOffset,
+                spawnModel.minFallTime);
         }
 
         private void HandleEscaped()

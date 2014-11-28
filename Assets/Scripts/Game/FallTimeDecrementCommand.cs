@@ -2,14 +2,14 @@
 
 namespace AST.Game
 {
-    public class DecrementSpawnDelayOffsetCommand : Command
+    public class FallTimeDecrementCommand : Command
     {
         [Inject]
         public SpawnModel model { private get; set; }
 
         public override void Execute()
         {
-            model.spawnDelayOffset -= model.spawnDelayDecrementOnSuccess;
+            model.fallTimeOffset -= model.fallTimeDecrementOnSpawn;
         }
     }
 }

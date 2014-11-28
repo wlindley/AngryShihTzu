@@ -27,9 +27,8 @@ namespace AST.Game
         private void ResetTimer()
         {
             model.spawnTimer += Mathf.Max(
-                Random.Range(model.initialMinSpawnDelay, model.initialMaxSpawnDelay) + model.spawnSuccessOffset,
+                Random.Range(model.initialMinSpawnDelay, model.initialMaxSpawnDelay) + model.spawnDelayOffset,
                 model.minSpawnDelay);
-            Debug.Log("Next spawn time: " + model.spawnTimer);
         }
 
         private void SpawnObject()
