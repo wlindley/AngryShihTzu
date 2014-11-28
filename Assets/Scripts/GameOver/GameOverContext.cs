@@ -13,6 +13,8 @@ namespace AST.GameOver
             base.mapBindings();
 
             commandBinder.Bind<GameOverStartSignal>();
+
+            mediationBinder.Bind<GameOverView>().To<GameOverViewMediator>();
         }
 
         protected override Signal getStartSignal()

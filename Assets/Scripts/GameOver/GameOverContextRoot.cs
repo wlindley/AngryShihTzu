@@ -4,7 +4,7 @@ namespace AST.GameOver
 {
     public class GameOverContextRoot : ContextView
     {
-        void Start()
+        void Awake()
         {
             context = new GameOverContext(this);
         }

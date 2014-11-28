@@ -8,7 +8,7 @@ namespace AST.Menu
 {
     public class MenuContextRoot : ContextView
     {
-        void Start()
+        void Awake()
         {
             context = new MenuContext(this);
         }

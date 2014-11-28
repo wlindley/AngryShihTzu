@@ -4,7 +4,7 @@ namespace AST.Game
 {
     public class GameContextRoot : ContextView
     {
-        void Start()
+        void Awake()
         {
             context = new GameContext(this);
         }

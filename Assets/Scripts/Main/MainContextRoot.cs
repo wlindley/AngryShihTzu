@@ -6,7 +6,7 @@ namespace AST.Main
 {
     public class MainContextRoot : ContextView
     {
-        void Start()
+        void Awake()
         {
             context = new MainContext(this);
         }
