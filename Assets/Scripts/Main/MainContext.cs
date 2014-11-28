@@ -17,6 +17,7 @@ namespace AST.Main
 
             injectionBinder.Bind<SceneStack>().ToSingleton().CrossContext();
             injectionBinder.Bind<LevelLoader>().ToSingleton().CrossContext();
+            injectionBinder.Bind<ScoreModel>().ToSingleton().CrossContext();
 
             commandBinder.Bind<MainStartSignal>().To<LoadMenuCommand>();
         }
