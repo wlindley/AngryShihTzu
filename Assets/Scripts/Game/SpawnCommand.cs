@@ -30,14 +30,55 @@ namespace AST.Game
 
         private void InitializeObject(Image image)
         {
-            image.sprite = Resources.Load<Sprite>("Images/" + Random.Range(0, 16).ToString("D2"));
+            image.sprite = GetRandomImage();
+            var pos = PositionObject(image);
+            AnimateObject(image, pos);
+        }
+
+        private Sprite GetRandomImage()
+        {
+            return Resources.Load<Sprite>("Images/" + Random.Range(0, 16).ToString("D2"));
+        }
+
+        private Vector3 PositionObject(Image image)
+        {
             var pos = image.rectTransform.position;
             pos.y = spawnModel.spawnHeight;
             pos.x = Random.Range(spawnModel.minSpawnX, spawnModel.maxSpawnX);
             image.rectTransform.position = pos;
+            return pos;
+        }
 
+        private void AnimateObject(Image image, Vector3 pos)
+        {
+            SetupVerticalMovement(image, pos);
+            SetupHorizontalMotion(image, pos);
+        }
+
+        private void SetupVerticalMovement(Image image, Vector3 pos)
+        {
             var fallTime = GetFallTime();
             LeanTween.move(image.rectTransform, new Vector2(pos.x, spawnModel.deathHeight), fallTime).setOnComplete(HandleEscaped);
+        }
+
+        private void SetupHorizontalMotion(Image image, Vector3 pos)
+        {
+            if (Random.value < spawnModel.chanceOfZigZagging)
+                LeanTween.moveX(image.gameObject, pos.x + GetHorizontalAmplitude(pos), GetHorizontalFrequency() * .5f).setLoopPingPong();
+        }
+
+        private float GetHorizontalAmplitude(Vector3 pos)
+        {
+            var horizDelta = Random.Range(spawnModel.minZigDelta, spawnModel.maxZigDelta);
+            if (pos.x > spawnModel.minSpawnX + (.5f * (spawnModel.maxSpawnX - spawnModel.minSpawnX)))
+                horizDelta *= -1f;
+            return horizDelta;
+        }
+
+        private float GetHorizontalFrequency()
+        {
+            var horizFrequency = Random.Range(spawnModel.minZigFrequency, spawnModel.maxZigFrequency);
+            return horizFrequency;
         }
 
         private float GetFallTime()

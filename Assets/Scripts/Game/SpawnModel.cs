@@ -30,5 +30,13 @@ namespace AST.Game
         public float initialMaxFallTime;
         public float fallTimeDecrementOnSpawn;
         public float minFallTime;
+
+        [Header("Horizontal motion")]
+        [Range(0f, 1f)]
+        public float chanceOfZigZagging;
+        public float minZigDelta;
+        public float maxZigDelta;
+        public float minZigFrequency;
+        public float maxZigFrequency;
     }
 }
