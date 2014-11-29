@@ -28,7 +28,7 @@ namespace AST.Game
             if (null == obj.transform.parent)
             {
                 obj.transform.SetParent(view.transform, false);
-                obj.transform.SetAsFirstSibling();
+                obj.transform.SetSiblingIndex(1);
             }
         }
     }
