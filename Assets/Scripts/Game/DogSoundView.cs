@@ -29,7 +29,19 @@ namespace AST.Game
 
         private AudioClip GetSound()
         {
-            return Resources.Load<AudioClip>("Sounds/dog_00");
+            if (Random.Range(0f, 1f) < goatChance)
+                return GetGoatSound();
+            return GetDogSound();
+        }
+
+        private AudioClip GetGoatSound()
+        {
+            return Resources.Load<AudioClip>("Sounds/goat_" + Random.Range(0, 2).ToString("D2"));
+        }
+
+        private AudioClip GetDogSound()
+        {
+            return Resources.Load<AudioClip>("Sounds/dog_" + Random.Range(0, 14).ToString("D2"));
         }
     }
 }
