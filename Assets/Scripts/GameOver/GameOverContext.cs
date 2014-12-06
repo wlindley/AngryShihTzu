@@ -15,6 +15,10 @@ namespace AST.GameOver
             commandBinder.Bind<GameOverStartSignal>();
 
             mediationBinder.Bind<GameOverView>().To<GameOverViewMediator>();
+
+#if !UNITY_WEBPLAYER && !UNITY_EDITOR
+            mediationBinder.Bind<ExitView>().To<DeletingMediator>();
+#endif
         }
 
         protected override Signal getStartSignal()
