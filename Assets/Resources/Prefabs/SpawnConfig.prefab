@@ -54,8 +54,8 @@ MonoBehaviour:
     fallTimeDecrementOnSpawn: .200000003
     minFallTime: .5
     chanceOfZigZagging: .333333343
-    minZigDelta: 5
-    maxZigDelta: 25
+    minZigDelta: 25
+    maxZigDelta: 75
     minZigFrequency: .5
     maxZigFrequency: 2
 --- !u!1001 &100100000
