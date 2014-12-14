@@ -25,7 +25,6 @@ namespace AST.Game
 
             mediationBinder.Bind<GameView>().To<GameViewMediator>();
             mediationBinder.Bind<SpawnConfigView>().To<SpawnConfigViewMediator>();
-            mediationBinder.Bind<DogImageView>().To<DogImageViewMediator>();
             mediationBinder.Bind<ScoreView>().To<ScoreViewMediator>();
             mediationBinder.Bind<MouseInputView>().To<MouseInputViewMediator>();
         }
