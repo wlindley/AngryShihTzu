@@ -16,7 +16,7 @@ namespace AST.GameOver
 
             mediationBinder.Bind<GameOverView>().To<GameOverViewMediator>();
 
-#if !UNITY_WEBPLAYER && !UNITY_EDITOR
+#if UNITY_WEBPLAYER || UNITY_EDITOR
             mediationBinder.Bind<ExitView>().To<DeletingMediator>();
 #endif
         }
