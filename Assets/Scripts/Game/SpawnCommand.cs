@@ -18,21 +18,20 @@ namespace AST.Game
         public override void Execute()
         {
             var obj = InstantiatePrefab();
-            InitializeObject(obj.GetComponent<Image>());
+            InitializeObject(obj);
             reparentSignal.Dispatch(obj);
         }
 
-        private static GameObject InstantiatePrefab()
+        private GameObject InstantiatePrefab()
         {
-            var prefab = Resources.Load<GameObject>("Prefabs/DogImage");
-            return GameObject.Instantiate(prefab) as GameObject;
+            return GameObject.Instantiate(spawnModel.prefabToSpawn) as GameObject;
         }
 
-        private void InitializeObject(Image image)
+        private void InitializeObject(GameObject go)
         {
-            image.sprite = GetRandomImage();
-            var pos = PositionObject(image);
-            AnimateObject(image, pos);
+            go.GetComponent<SpriteRenderer>().sprite = GetRandomImage();
+            var pos = PositionObject(go);
+            AnimateObject(go, pos);
         }
 
         private Sprite GetRandomImage()
@@ -40,31 +39,31 @@ namespace AST.Game
             return Resources.Load<Sprite>("Images/" + Random.Range(0, 16).ToString("D2"));
         }
 
-        private Vector3 PositionObject(Image image)
+        private Vector3 PositionObject(GameObject go)
         {
-            var pos = image.rectTransform.position;
+            var pos = go.transform.position;
             pos.y = spawnModel.spawnHeight;
             pos.x = Random.Range(spawnModel.minSpawnX, spawnModel.maxSpawnX);
-            image.rectTransform.position = pos;
+            go.transform.position = pos;
             return pos;
         }
 
-        private void AnimateObject(Image image, Vector3 pos)
+        private void AnimateObject(GameObject go, Vector3 pos)
         {
-            SetupVerticalMovement(image, pos);
-            SetupHorizontalMotion(image, pos);
+            SetupVerticalMovement(go, pos);
+            SetupHorizontalMotion(go, pos);
         }
 
-        private void SetupVerticalMovement(Image image, Vector3 pos)
+        private void SetupVerticalMovement(GameObject go, Vector3 pos)
         {
             var fallTime = GetFallTime();
-            LeanTween.move(image.rectTransform, new Vector2(pos.x, spawnModel.deathHeight), fallTime).setOnComplete(HandleEscaped);
+            LeanTween.moveY(go, spawnModel.deathHeight, fallTime).setOnComplete(HandleEscaped);
         }
 
-        private void SetupHorizontalMotion(Image image, Vector3 pos)
+        private void SetupHorizontalMotion(GameObject go, Vector3 pos)
         {
             if (Random.value < spawnModel.chanceOfZigZagging)
-                LeanTween.moveX(image.gameObject, pos.x + GetHorizontalAmplitude(pos), GetHorizontalFrequency() * .5f).setLoopPingPong();
+                LeanTween.moveX(go, pos.x + GetHorizontalAmplitude(pos), GetHorizontalFrequency() * .5f).setLoopPingPong();
         }
 
         private float GetHorizontalAmplitude(Vector3 pos)

@@ -13,6 +13,8 @@ namespace AST.Game
         [NonSerialized]
         public float fallTimeOffset = 0f;
 
+        public GameObject prefabToSpawn;
+
         [Header("Spawn timing")]
         public float initialMinSpawnDelay;
         public float initialMaxSpawnDelay;
