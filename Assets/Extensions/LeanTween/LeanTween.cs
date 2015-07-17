@@ -1010,7 +1010,7 @@ public class LTDescr{
 	#if LEANTWEEN_1
 	public Hashtable optional;
 	#endif
-	#if UNITY_4_6 || UNITY_5_0
+	#if UNITY_4_6 || UNITY_5_0 || UNITY_5_1
 	public RectTransform rectTransform;
     public UnityEngine.UI.Text uiText;
 	#endif
@@ -1519,7 +1519,7 @@ public class LTDescr{
 		return this;
 	}
 
-#if UNITY_4_6 || UNITY_5_0
+#if UNITY_4_6 || UNITY_5_0 || UNITY_5_1
 	public LTDescr setRect( RectTransform rect ){
 		this.rectTransform = rect;
 		return this;
@@ -1719,8 +1719,8 @@ public static void update() {
 								SpriteRenderer ren = trans.gameObject.GetComponent<SpriteRenderer>();
 								if(ren!=null){
 									tween.from.x = ren.color.a;
-								}else if(trans.gameObject.renderer!=null){
-									tween.from.x = trans.gameObject.renderer.material.color.a;
+								}else if(trans.gameObject.GetComponent<Renderer>()!=null){
+									tween.from.x = trans.gameObject.GetComponent<Renderer>().material.color.a;
 								}
 								break;
 							#endif
@@ -1807,9 +1807,9 @@ public static void update() {
 									tween.from = new Vector3(0.0f, ren2.color.a, 0.0f);
 									tween.diff = new Vector3(1.0f,0.0f,0.0f);
 									tween.axis = new Vector3( ren2.color.r, ren2.color.g, ren2.color.b );
-								}else if(trans.gameObject.renderer!=null){
-									if(trans.gameObject.renderer){
-										Color col = trans.gameObject.renderer.material.color;
+								}else if(trans.gameObject.GetComponent<Renderer>()!=null){
+									if(trans.gameObject.GetComponent<Renderer>()){
+										Color col = trans.gameObject.GetComponent<Renderer>().material.color;
 										tween.from = new Vector3(0.0f, col.a, 0.0f);
 										tween.diff = new Vector3(1.0f,0.0f,0.0f);
 										tween.axis = new Vector3( col.r, col.g, col.b );
@@ -1817,7 +1817,7 @@ public static void update() {
 								}
 							#endif
 							break;
-						#if UNITY_4_6 || UNITY_5_0
+						#if UNITY_4_6 || UNITY_5_0 || UNITY_5_1
                         case TweenAction.TEXT_ALPHA:
                             tween.uiText = trans.gameObject.GetComponent<UnityEngine.UI.Text>();
                             if (tween.uiText != null){
@@ -2076,15 +2076,15 @@ public static void update() {
 							if(ren!=null){
 								ren.color = new Color( ren.color.r, ren.color.g, ren.color.b, val);
 							}else{
-								if(trans.gameObject.renderer!=null){
-									foreach(Material mat in trans.gameObject.renderer.materials){
+								if(trans.gameObject.GetComponent<Renderer>()!=null){
+									foreach(Material mat in trans.gameObject.GetComponent<Renderer>().materials){
 		        						mat.color = new Color( mat.color.r, mat.color.g, mat.color.b, val);
 		    						}
 		    					}
 	    						if(trans.childCount>0){
 	    							foreach (Transform child in trans) {
-	    								if(child.gameObject.renderer!=null){
-		    								foreach(Material mat in child.gameObject.renderer.materials){
+	    								if(child.gameObject.GetComponent<Renderer>()!=null){
+		    								foreach(Material mat in child.gameObject.GetComponent<Renderer>().materials){
 				        						mat.color = new Color( mat.color.r, mat.color.g, mat.color.b, val);
 				    						}
 				    					}
@@ -2107,8 +2107,8 @@ public static void update() {
 							Color toColor = tweenColor(tween, val);
 							// Debug.Log("val:"+val+" tween:"+tween+" tween.diff:"+tween.diff);
 							if(tweenAction==TweenAction.COLOR){
-								if(trans.gameObject.renderer!=null){
-									foreach(Material mat in trans.gameObject.renderer.materials){
+								if(trans.gameObject.GetComponent<Renderer>()!=null){
+									foreach(Material mat in trans.gameObject.GetComponent<Renderer>().materials){
 		        						mat.color = toColor;
 		    						}
 		    					}
@@ -2117,7 +2117,7 @@ public static void update() {
 								tween.onUpdateColor(toColor);
 							}
 						}
-						#if UNITY_4_6 || UNITY_5_0
+						#if UNITY_4_6 || UNITY_5_0 || UNITY_5_1
                         else if (tweenAction == TweenAction.TEXT_ALPHA){
                             Color c = tween.uiText.color;
                             c.a = val;
@@ -2273,7 +2273,7 @@ public static void update() {
 					    }else if(tweenAction==TweenAction.GUI_ROTATE){
 					    	tween.ltRect.rotation = newVect.x;
 					    }
-					    #if UNITY_4_6 || UNITY_5_0
+					    #if UNITY_4_6 || UNITY_5_0 || UNITY_5_1
 						else if(tweenAction==TweenAction.CANVAS_MOVE){
 							tween.rectTransform.anchoredPosition = newVect;
 						}else if(tweenAction==TweenAction.CANVAS_SCALE){
@@ -2840,7 +2840,7 @@ public static LTDescr alpha(LTRect ltRect, float to, float time){
 	return pushNewTween( tweenEmpty, new Vector3(to,0f,0f), time, TweenAction.GUI_ALPHA, options().setRect( ltRect ) );
 }
 
-#if UNITY_4_6 || UNITY_5_0
+#if UNITY_4_6 || UNITY_5_0 || UNITY_5_1
 public static LTDescr textAlpha(GameObject gameObject, float to, float time){
     return pushNewTween(gameObject, new Vector3(to,0,0), time, TweenAction.TEXT_ALPHA, options());
 }
@@ -2880,7 +2880,7 @@ public static LTDescr color(GameObject gameObject, Color to, float time){
 	return pushNewTween( gameObject, new Vector3(1.0f, to.a, 0.0f), time, TweenAction.COLOR, options().setPoint( new Vector3(to.r, to.g, to.b) ) );
 }
 
-#if UNITY_4_6 || UNITY_5_0
+#if UNITY_4_6 || UNITY_5_0 || UNITY_5_1
 public static LTDescr textColor(GameObject gameObject, Color to, float time){
     return pushNewTween(gameObject, new Vector3(1.0f, to.a, 0.0f), time, TweenAction.TEXT_COLOR, options().setPoint(new Vector3(to.r, to.g, to.b)));
 }
@@ -3453,7 +3453,7 @@ public static LTDescr delayedSound( GameObject gameObject, AudioClip audio, Vect
 	return pushNewTween( gameObject, pos, 0f, TweenAction.DELAYED_SOUND, options().setTo( pos ).setFrom( new Vector3(volume,0,0) ).setAudio( audio ) );
 }
 
-#if UNITY_4_6 || UNITY_5_0
+#if UNITY_4_6 || UNITY_5_0 || UNITY_5_1
 
 /**
 * Move a RectTransform object (used in Unity GUI in 4.6+, for Buttons, Panel, Scrollbar, etc...)

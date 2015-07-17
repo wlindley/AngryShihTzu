@@ -16,15 +16,15 @@ namespace AST.Game
 
         void Update()
         {
-            if (!audio.isPlaying)
+            if (!GetComponent<AudioSource>().isPlaying)
                 GameObject.Destroy(gameObject);
         }
 
         private void PlayBark()
         {
             var soundClip = GetSound();
-            audio.clip = soundClip;
-            audio.Play();
+            GetComponent<AudioSource>().clip = soundClip;
+            GetComponent<AudioSource>().Play();
         }
 
         private AudioClip GetSound()

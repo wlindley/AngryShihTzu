@@ -32,16 +32,18 @@ namespace AST.GameOver
         {
 #if UNITY_WEBPLAYER
             return "http://www.walkerlindley.com/projects/angryshihtzus/AngryShihTzus.apk";
-#endif
+#else
             return "http://www.walkerlindley.com/projects/angryshihtzus/";
+#endif
         }
 
         private string GetButtonLabelForPlatform()
         {
 #if UNITY_WEBPLAYER
             return "Get Android App";
-#endif
+#else
             return "Play Online";
+#endif
         }
     }
 }
