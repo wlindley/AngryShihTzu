@@ -12,16 +12,18 @@ namespace AST
         private Type[] scriptableObjectTypes = new Type[0];
         private TypeFinder typeFinder = TypeFinder.GetInstance();
         private ScriptableObjectHelper helper = ScriptableObjectHelper.GetInstance();
+        private Vector2 scrollPos = new Vector2();
 
         void Awake()
         {
             var assembly = Assembly.GetAssembly(typeof(AssemblyMarker));
             scriptableObjectTypes = typeFinder.FindTypesInAssemblyWhere(assembly, helper.IsTypeScriptableObject);
+            titleContent = new GUIContent("Create Scriptable Object Asset");
         }
 
         void OnGUI()
         {
-            EditorGUILayout.LabelField("Create ScriptableObject Asset");
+            scrollPos = GUILayout.BeginScrollView(scrollPos);
             foreach (var type in scriptableObjectTypes)
             {
                 if (GUILayout.Button(type.Name))
@@ -29,6 +31,7 @@ namespace AST
                     HandleButtonClicked(type);
                 }
             }
+            GUILayout.EndScrollView();
         }
 
         private void HandleButtonClicked(Type type)
