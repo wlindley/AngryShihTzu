@@ -31,7 +31,7 @@ namespace AST
                 CreateAndAddInspector(asset, type);
         }
 
-        private static bool IsAssetInspector(Type type)
+        private bool IsAssetInspector(Type type)
         {
             return type.GetInterfaces().Contains(typeof(AssetInspector));
         }
