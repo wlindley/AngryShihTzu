@@ -15,18 +15,19 @@ namespace AST
                 && !type.IsSubclassOf(typeof(EditorWindow));
         }
 
-        public void CreateScriptableObjectInstance(Type type, string path = null)
+        public ScriptableObject CreateScriptableObjectInstance(Type type, string path = null)
         {
             if (!IsTypeScriptableObject(type))
             {
                 Debug.LogError("Tried to create instance of " + type.FullName + ", but it is not a ScriptableObject");
-                return;
+                return null;
             }
 
             var asset = ScriptableObject.CreateInstance(type);
             path = ValidatePath(type, path);
             AssetDatabase.CreateAsset(asset, path);
             EditorGUIUtility.PingObject(asset);
+            return AssetDatabase.LoadAssetAtPath(path, type) as ScriptableObject;
         }
 
         private string ValidatePath(Type type, string path)
