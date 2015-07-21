@@ -53,9 +53,22 @@ namespace AST
                 list[i] = EditorGUILayout.ObjectField(list[i], typeof(ScriptableObject), false) as T;
 
                 DrawTypeChangeButton(i);
-
+                DrawUpButton(i);
+                DrawDownButton(i);
                 DrawRemovalButton(i);
             }
+        }
+
+        private void DrawUpButton(int i)
+        {
+            if (GUILayout.Button("˄", GUILayout.MaxWidth(20)))
+                Swap(i, i - 1);
+        }
+
+        private void DrawDownButton(int i)
+        {
+            if (GUILayout.Button("˅", GUILayout.MaxWidth(20)))
+                Swap(i, i + 1);
         }
 
         private void DrawTypeChangeButton(int i)
@@ -70,6 +83,15 @@ namespace AST
         {
             if (GUILayout.Button("X", GUILayout.MaxWidth(20)))
                 toRemove.Add(i);
+        }
+
+        private void Swap(int src, int dst)
+        {
+            if (0 > src || 0 > dst || list.Count <= src || list.Count <= dst)
+                return;
+            var tmp = list[dst];
+            list[dst] = list[src];
+            list[src] = tmp;
         }
 
         private void ClearQueuedRemovalIndeces()
