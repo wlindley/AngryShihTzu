@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace AST
 {
-    public class ScriptableObjectCreator : EditorWindow
+    public class ScriptableObjectCreationWindow : EditorWindow
     {
         private Type[] scriptableObjectTypes = new Type[0];
         private TypeFinder typeFinder = TypeFinder.GetInstance();
@@ -24,14 +24,15 @@ namespace AST
         void OnGUI()
         {
             scrollPos = GUILayout.BeginScrollView(scrollPos);
-            foreach (var type in scriptableObjectTypes)
-            {
-                if (GUILayout.Button(type.Name))
-                {
-                    HandleButtonClicked(type);
-                }
-            }
+            DrawTypeButtons();
             GUILayout.EndScrollView();
+        }
+
+        private void DrawTypeButtons()
+        {
+            foreach (var type in scriptableObjectTypes)
+                if (GUILayout.Button(type.Name))
+                    HandleButtonClicked(type);
         }
 
         private void HandleButtonClicked(Type type)
@@ -43,7 +44,7 @@ namespace AST
         [MenuItem("Assets/Create/ScriptableObject")]
         public static void ShowScriptableObjectCreator()
         {
-            var window = ScriptableObject.CreateInstance<ScriptableObjectCreator>();
+            var window = ScriptableObject.CreateInstance<ScriptableObjectCreationWindow>();
             window.ShowUtility();
         }
     }

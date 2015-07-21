@@ -10,11 +10,6 @@ namespace AST
     {
         private List<T> list = new List<T>();
         private List<int> toRemove = new List<int>();
-        private ScriptableObjectHelper helper = ScriptableObjectHelper.GetInstance();
-        private TypeFinder finder = TypeFinder.GetInstance();
-        private Type[] validTypes = new Type[0];
-        private string[] validTypeNames = new string[0];
-        private int selectionIndex = 0;
         private bool areHidden = true;
 
         protected virtual void OnEnable()
@@ -25,9 +20,6 @@ namespace AST
 
             if (0 < list.Count && null != list[0])
                 areHidden = HideFlags.HideInHierarchy == list[0].hideFlags;
-
-            validTypes = finder.FindTypesWhere((type) => type.IsSubclassOf(typeof(T)) && !type.IsAbstract);
-            validTypeNames = validTypes.Select<Type, string>((type) => type.Name).ToArray();
         }
 
         public override void OnInspectorGUI()
@@ -43,6 +35,7 @@ namespace AST
                     list[i] = EditorGUILayout.ObjectField(list[i], typeof(ScriptableObject), false) as T;
                     if (GUILayout.Button("Type", GUILayout.MaxWidth(40)))
                     {
+                        ScriptableObjectTypeSelectionDropDown.ShowDropDownForSubtype(typeof(T), GUILayoutUtility.GetLastRect(), ReplaceInstanceFromSelectedType(i));
                     }
                     if (GUILayout.Button("X", GUILayout.MaxWidth(20)))
                     {
@@ -80,18 +73,37 @@ namespace AST
                         AssetDatabase.ImportAsset(AssetDatabase.GetAssetPath(item));
                     }
                 }
-                selectionIndex = EditorGUILayout.Popup(selectionIndex, validTypeNames);
                 if (GUILayout.Button("+"))
                 {
-                    var so = ScriptableObject.CreateInstance(validTypes[selectionIndex]) as T;
-                    so.name = validTypes[selectionIndex].Name;
-                    if (areHidden)
-                        so.hideFlags = HideFlags.HideInHierarchy;
-                    AssetDatabase.AddObjectToAsset(so, target);
-                    AssetDatabase.ImportAsset(AssetDatabase.GetAssetPath(so));
-                    list.Add(so);
+                    ScriptableObjectTypeSelectionDropDown.ShowDropDownForSubtype(typeof(T), GUILayoutUtility.GetLastRect(), CreateInstanceFromSelectedType);
                 }
             }
+        }
+
+        private Action<Type> ReplaceInstanceFromSelectedType(int i)
+        {
+            return (type) =>
+            {
+                ScriptableObject.DestroyImmediate(list[i], true);
+                var so = ScriptableObject.CreateInstance(type) as T;
+                so.name = type.Name;
+                if (areHidden)
+                    so.hideFlags = HideFlags.HideInHierarchy;
+                AssetDatabase.AddObjectToAsset(so, target);
+                list[i] = so;
+                AssetDatabase.ImportAsset(AssetDatabase.GetAssetPath(so));
+            };
+        }
+
+        private void CreateInstanceFromSelectedType(Type type)
+        {
+            var so = ScriptableObject.CreateInstance(type) as T;
+            so.name = type.Name;
+            if (areHidden)
+                so.hideFlags = HideFlags.HideInHierarchy;
+            AssetDatabase.AddObjectToAsset(so, target);
+            AssetDatabase.ImportAsset(AssetDatabase.GetAssetPath(so));
+            list.Add(so);
         }
     }
 }
