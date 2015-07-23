@@ -23,9 +23,16 @@ namespace AST
 
         public override void OnInspectorGUI()
         {
+            DrawListHeader();
             DrawList();
             ClearQueuedRemovalIndeces();
-            DrawBottomControlBar();
+            DrawListFooter();
+        }
+
+        private void DrawListHeader()
+        {
+            EditorGUILayout.LabelField("Size: " + list.Count);
+            EditorGUI.indentLevel++;
         }
 
         private void UpdateHiddenState()
@@ -59,29 +66,29 @@ namespace AST
             }
         }
 
-        private void DrawUpButton(int i)
-        {
-            if (GUILayout.Button("˄", GUILayout.MaxWidth(20)))
-                Swap(i, i - 1);
-        }
-
-        private void DrawDownButton(int i)
-        {
-            if (GUILayout.Button("˅", GUILayout.MaxWidth(20)))
-                Swap(i, i + 1);
-        }
-
         private void DrawTypeChangeButton(int i)
         {
-            if (GUILayout.Button("Type", GUILayout.MaxWidth(40)))
+            if (GUILayout.Button("Type", EditorStyles.miniButtonLeft, GUILayout.MaxWidth(40)))
                 ScriptableObjectTypeSelectionDropDown.ShowDropDownForSubtype(
                     typeof(T), GUILayoutUtility.GetLastRect(), ReplaceInstanceFromSelectedType(i)
                 );
         }
 
+        private void DrawUpButton(int i)
+        {
+            if (GUILayout.Button("˄", EditorStyles.miniButtonMid, GUILayout.MaxWidth(20)))
+                Swap(i, i - 1);
+        }
+
+        private void DrawDownButton(int i)
+        {
+            if (GUILayout.Button("˅", EditorStyles.miniButtonMid, GUILayout.MaxWidth(20)))
+                Swap(i, i + 1);
+        }
+
         private void DrawRemovalButton(int i)
         {
-            if (GUILayout.Button("X", GUILayout.MaxWidth(20)))
+            if (GUILayout.Button("x", EditorStyles.miniButtonRight, GUILayout.MaxWidth(20)))
                 toRemove.Add(i);
         }
 
@@ -118,15 +125,17 @@ namespace AST
             }
         }
 
-        private void DrawBottomControlBar()
+        private void DrawListFooter()
         {
+            EditorGUI.indentLevel--;
             using (var row = new EditorGUILayout.HorizontalScope())
             {
-                if (GUILayout.Button("Hide"))
+                if (GUILayout.Button("Hide", EditorStyles.miniButtonLeft, GUILayout.MaxWidth(80)))
                     HandleHideClicked();
-                if (GUILayout.Button("Show"))
+                if (GUILayout.Button("Show", EditorStyles.miniButtonRight, GUILayout.MaxWidth(80)))
                     HandleShowClicked();
-                if (GUILayout.Button("+"))
+                GUILayout.Label("");
+                if (GUILayout.Button("+", EditorStyles.miniButton, GUILayout.MaxWidth(80)))
                     ScriptableObjectTypeSelectionDropDown.ShowDropDownForSubtype(
                         typeof(T), GUILayoutUtility.GetLastRect(), CreateInstanceFromSelectedType
                     );
