@@ -15,6 +15,9 @@ namespace AST
         private Type rootType = typeof(ScriptableObject);
         private Action<Type> selectionCallback;
 
+        private const float RowWidth = 150f;
+        private const float RowHeight = 22f;
+
         void OnGUI()
         {
             scrollPos = GUILayout.BeginScrollView(scrollPos);
@@ -23,6 +26,12 @@ namespace AST
             DrawCancelButton();
 
             GUILayout.EndScrollView();
+        }
+
+        private float GetHeight()
+        {
+            var numSubTypes = Math.Min(GetSubtypes().Length + 1, 10);
+            return numSubTypes * RowHeight;
         }
 
         private Type[] GetSubtypes()
@@ -57,7 +66,7 @@ namespace AST
             var window = ScriptableObject.CreateInstance<ScriptableObjectTypeSelectionDropDown>() as ScriptableObjectTypeSelectionDropDown;
             window.rootType = type;
             window.selectionCallback = selectionCallback;
-            window.ShowAsDropDown(area, new Vector2(100f, 200f));
+            window.ShowAsDropDown(area, new Vector2(RowWidth, window.GetHeight()));
         }
     }
 }
