@@ -140,6 +140,8 @@ namespace AST
             list.RemoveAt(removalIndex);
             if (!list.Contains(so))
                 ScriptableObject.DestroyImmediate(so, true);
+            if (buttonRects.ContainsKey(removalIndex))
+                buttonRects.Remove(removalIndex);
         }
 
         private void CleanUpAfterRemoval()
