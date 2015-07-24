@@ -11,6 +11,7 @@ namespace AST
         private List<T> list = new List<T>();
         private List<int> toRemove = new List<int>();
         private bool areHidden = true;
+        private Dictionary<int, Rect> buttonRects = new Dictionary<int, Rect>();
 
         protected virtual void OnEnable()
         {
@@ -69,9 +70,34 @@ namespace AST
         private void DrawTypeChangeButton(int i)
         {
             if (GUILayout.Button("Type", EditorStyles.miniButtonLeft, GUILayout.MaxWidth(40)))
+            {
                 ScriptableObjectTypeSelectionDropDown.ShowDropDownForSubtype(
-                    typeof(T), GUILayoutUtility.GetLastRect(), ReplaceInstanceFromSelectedType(i)
+                    typeof(T), GetButtonRect(i), ReplaceInstanceFromSelectedType(i)
                 );
+            }
+            CacheLastButtonRect(i);
+        }
+
+        private Rect GetButtonRect(int key)
+        {
+            Rect rect = GetDefaultRect();
+            buttonRects.TryGetValue(key, out rect);
+            return rect;
+        }
+
+        private static Rect GetDefaultRect()
+        {
+            return new Rect(Input.mousePosition, new Vector2(80, 0));
+        }
+
+        private void CacheLastButtonRect(int key)
+        {
+            var rect = GUILayoutUtility.GetLastRect();
+            if (rect.x != 0f && rect.y != 0f)
+            {
+                var topLeft = EditorGUIUtility.GUIToScreenPoint(rect.position);
+                buttonRects[key] = new Rect(topLeft, new Vector2(rect.width, 0));
+            }
         }
 
         private void DrawUpButton(int i)
@@ -136,9 +162,12 @@ namespace AST
                     HandleShowClicked();
                 GUILayout.FlexibleSpace();
                 if (GUILayout.Button("+", EditorStyles.miniButton, GUILayout.MaxWidth(80)))
+                {
                     ScriptableObjectTypeSelectionDropDown.ShowDropDownForSubtype(
-                        typeof(T), GUILayoutUtility.GetLastRect(), CreateInstanceFromSelectedType
+                        typeof(T), GetButtonRect(-1), CreateInstanceFromSelectedType
                     );
+                }
+                CacheLastButtonRect(-1);
             }
         }
 
