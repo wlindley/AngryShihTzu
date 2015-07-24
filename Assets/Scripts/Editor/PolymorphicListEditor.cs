@@ -134,7 +134,7 @@ namespace AST
                     HandleHideClicked();
                 if (GUILayout.Button("Show", EditorStyles.miniButtonRight, GUILayout.MaxWidth(80)))
                     HandleShowClicked();
-                GUILayout.Label("");
+                GUILayout.FlexibleSpace();
                 if (GUILayout.Button("+", EditorStyles.miniButton, GUILayout.MaxWidth(80)))
                     ScriptableObjectTypeSelectionDropDown.ShowDropDownForSubtype(
                         typeof(T), GUILayoutUtility.GetLastRect(), CreateInstanceFromSelectedType
