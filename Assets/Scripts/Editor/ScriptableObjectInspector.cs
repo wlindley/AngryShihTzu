@@ -15,7 +15,7 @@ namespace AST
 
         private void DrawNameField()
         {
-            name = EditorGUILayout.TextField("Name", name);
+            target.name = EditorGUILayout.TextField("Name", target.name);
         }
 
         private void DrawBackButton()
