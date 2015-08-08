@@ -45,11 +45,7 @@ namespace AST
         private void DrawList()
         {
             for (var i = 0; i < list.Count; i++)
-            {
-                if (null == list[i])
-                    continue;
                 DrawListRow(i);
-            }
         }
 
         private void DrawListRow(int i)
