@@ -10,7 +10,6 @@ namespace AST
     {
         private List<T> list = new List<T>();
         private List<int> toRemove = new List<int>();
-        private bool areHidden = true;
         private Dictionary<int, Rect> buttonRects = new Dictionary<int, Rect>();
 
         protected virtual void OnEnable()
@@ -18,8 +17,6 @@ namespace AST
             var plist = target as PolymorphicList<T>;
             if (null != plist)
                 list = plist.list;
-
-            UpdateHiddenState();
         }
 
         public override void OnInspectorGUI()
@@ -34,12 +31,6 @@ namespace AST
         {
             EditorGUILayout.LabelField("Size: " + list.Count);
             EditorGUI.indentLevel++;
-        }
-
-        private void UpdateHiddenState()
-        {
-            if (0 < list.Count && null != list[0])
-                areHidden = HideFlags.HideInHierarchy == list[0].hideFlags;
         }
 
         private void DrawList()
@@ -154,10 +145,6 @@ namespace AST
             EditorGUI.indentLevel--;
             using (var row = new EditorGUILayout.HorizontalScope())
             {
-                if (GUILayout.Button("Hide", EditorStyles.miniButtonLeft, GUILayout.MaxWidth(80)))
-                    HandleHideClicked();
-                if (GUILayout.Button("Show", EditorStyles.miniButtonRight, GUILayout.MaxWidth(80)))
-                    HandleShowClicked();
                 GUILayout.FlexibleSpace();
                 if (GUILayout.Button("+", EditorStyles.miniButton, GUILayout.MaxWidth(80)))
                 {
@@ -166,26 +153,6 @@ namespace AST
                     );
                 }
                 CacheLastButtonRect(-1);
-            }
-        }
-
-        private void HandleHideClicked()
-        {
-            areHidden = true;
-            foreach (var item in list)
-            {
-                item.hideFlags = HideFlags.HideInHierarchy;
-                RefreshAsset(item);
-            }
-        }
-
-        private void HandleShowClicked()
-        {
-            areHidden = false;
-            foreach (var item in list)
-            {
-                item.hideFlags = HideFlags.None;
-                RefreshAsset(item);
             }
         }
 
@@ -212,8 +179,7 @@ namespace AST
         {
             var so = ScriptableObject.CreateInstance(type) as T;
             so.name = type.Name;
-            if (areHidden)
-                so.hideFlags = HideFlags.HideInHierarchy;
+            so.hideFlags = HideFlags.HideInHierarchy;
             AssetDatabase.AddObjectToAsset(so, target);
             return so;
         }
